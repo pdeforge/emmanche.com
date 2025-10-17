@@ -165,11 +165,23 @@ h1 span:nth-child(11) { animation-delay: 1.0s; }
     font-weight: bold;
 }
 
+
 .small-text {
     font-size: 0.9em;
     color: #666;
     position: relative;
     display: inline-block;
+    /* Animation globale pour garder les espaces */
+}
+
+.move-text {
+    animation: moveText 2s infinite alternate cubic-bezier(.68,-0.55,.27,1.55);
+}
+
+@keyframes moveText {
+    0% { transform: translateY(0) scale(1); letter-spacing: normal; }
+    50% { transform: translateY(-8px) scale(1.05); letter-spacing: 0.05em; }
+    100% { transform: translateY(0) scale(1); letter-spacing: normal; }
 }
 
 .sparkle-text {

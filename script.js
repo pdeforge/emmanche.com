@@ -116,10 +116,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const constructionText = document.querySelector('.construction-text .text');
     makeDiscoText(constructionText);
 
-    // Effet de rotation folle sur le petit texte (préserver les espaces et ne pas transformer en spans)
+    // Effet de translation douce sur le petit texte (préserver les espaces et ne pas transformer en spans)
     const smallText = document.querySelector('.small-text');
     if (smallText) {
-        makeCrazyRotation(smallText);
+        smallText.classList.add('move-text');
     }
 
     // Effet 3D sur le titre principal avec lettres individuelles
