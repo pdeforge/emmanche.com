@@ -116,9 +116,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const constructionText = document.querySelector('.construction-text .text');
     makeDiscoText(constructionText);
 
-    // Effet de rotation folle sur le petit texte (préserver les espaces)
+    // Effet de rotation folle sur le petit texte (préserver les espaces et ne pas transformer en spans)
     const smallText = document.querySelector('.small-text');
-    makeCrazyRotation(smallText);
+    if (smallText) {
+        makeCrazyRotation(smallText);
+    }
 
     // Effet 3D sur le titre principal avec lettres individuelles
     const titleLetters = document.querySelectorAll('h1 span');
@@ -130,12 +132,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // Ajouter des emojis flottants
     addFloatingEmojis();
 
-    // Ajouter des effets de survol sur tous les textes
+    // Ajouter des effets de survol sur tous les textes sauf .small-text
     document.querySelectorAll('p, span, h1').forEach(element => {
-        element.addEventListener('mouseover', () => {
-            element.style.animation = 'none';
-            element.offsetHeight;
-            element.style.animation = 'letterPop 0.5s ease';
-        });
+        if (!element.classList.contains('small-text')) {
+            element.addEventListener('mouseover', () => {
+                element.style.animation = 'none';
+                element.offsetHeight;
+                element.style.animation = 'letterPop 0.5s ease';
+            });
+        }
     });
 });
