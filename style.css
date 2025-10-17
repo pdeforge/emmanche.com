@@ -292,6 +292,12 @@ h1 span:nth-child(11) { animation-delay: 1.0s; }
     display: inline-block;
     animation: rainbow 2s linear infinite;
 }
+.rainbow-letter.space {
+    width: 0.6em;
+    display: inline-block;
+    background: none;
+    animation: none;
+}
 
 @keyframes rainbow {
     0% { color: red; }

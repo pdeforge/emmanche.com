@@ -9,10 +9,13 @@ function makeTextShake(element) {
 // Fonction pour faire "arc-en-ciel" le texte
 function makeRainbowText(element) {
     const text = element.textContent;
-    element.innerHTML = text.split('').map(char => 
-        `<span class="rainbow-letter">${char}</span>`
-    ).join('');
-    
+    element.innerHTML = text.split('').map(char => {
+        if (char === ' ') {
+            return '<span class="rainbow-letter space">&nbsp;</span>';
+        } else {
+            return `<span class="rainbow-letter">${char}</span>`;
+        }
+    }).join('');
     const letters = element.querySelectorAll('.rainbow-letter');
     letters.forEach((letter, i) => {
         letter.style.animationDelay = `${i * 0.1}s`;
@@ -103,13 +106,11 @@ function addFloatingEmojis() {
 
 // Initialisation quand le DOM est chargé
 document.addEventListener('DOMContentLoaded', () => {
-    // Effet arc-en-ciel sur la question uniquement (pas la punchline)
+    // Effet arc-en-ciel sur la question et la punchline (espaces préservés)
     const joke = document.querySelector('.joke');
     if (joke) makeRainbowText(joke);
-
-    // Effet global sur la punchline pour garder les espaces
     const punchline = document.querySelector('.punchline');
-    if (punchline) punchline.classList.add('move-text');
+    if (punchline) makeRainbowText(punchline);
 
     // Effet de danse sur le tagline
     const tagline = document.querySelector('.tagline');
