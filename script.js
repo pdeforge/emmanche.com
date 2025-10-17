@@ -56,6 +56,35 @@ function make3DSpinning(element) {
     element.style.perspective = '1000px';
 }
 
+// Effet disco sur le texte
+function makeDiscoText(element) {
+    setInterval(() => {
+        const hue = Math.random() * 360;
+        const size = 1 + Math.random() * 0.2;
+        element.style.filter = `hue-rotate(${hue}deg)`;
+        element.style.transform = `scale(${size})`;
+    }, 200);
+}
+
+// Effet de rotation folle
+function makeCrazyRotation(element) {
+    let angle = 0;
+    setInterval(() => {
+        angle += Math.random() * 10 - 5;
+        element.style.transform = `rotate(${angle}deg)`;
+    }, 100);
+}
+
+// Effet de danse
+function makeDanceText(element) {
+    setInterval(() => {
+        const x = Math.random() * 10 - 5;
+        const y = Math.random() * 10 - 5;
+        const rotation = Math.random() * 20 - 10;
+        element.style.transform = `translate(${x}px, ${y}px) rotate(${rotation}deg)`;
+    }, 150);
+}
+
 // Fonction pour ajouter des emojis volants
 function addFloatingEmojis() {
     const emojis = ['🎯', '😅', '🎨', '✨', '🚀', '🌈'];
@@ -74,26 +103,39 @@ function addFloatingEmojis() {
 
 // Initialisation quand le DOM est chargé
 document.addEventListener('DOMContentLoaded', () => {
-    // Effet de secousse sur le tagline
+    // Effet arc-en-ciel sur tous les textes de la blague
+    const jokeBox = document.querySelector('.joke-box');
+    const allJokeTexts = jokeBox.querySelectorAll('p');
+    allJokeTexts.forEach(text => makeRainbowText(text));
+
+    // Effet de danse sur le tagline
     const tagline = document.querySelector('.tagline');
-    makeTextShake(tagline);
+    makeDanceText(tagline);
 
-    // Effet arc-en-ciel sur la blague
-    const joke = document.querySelector('.joke');
-    makeRainbowText(joke);
+    // Effet disco sur la construction text
+    const constructionText = document.querySelector('.construction-text .text');
+    makeDiscoText(constructionText);
 
-    // Effet de rebond au survol sur la punchline
-    const punchline = document.querySelector('.punchline');
-    makeBouncyHover(punchline);
+    // Effet de rotation folle sur le petit texte (préserver les espaces)
+    const smallText = document.querySelector('.small-text');
+    makeCrazyRotation(smallText);
 
-    // Effet de vague sur le texte de construction
-    const construction = document.querySelector('.construction p');
-    makeWaveEffect(construction);
-
-    // Effet 3D sur le titre principal
-    const title = document.querySelector('h1');
-    make3DSpinning(title);
+    // Effet 3D sur le titre principal avec lettres individuelles
+    const titleLetters = document.querySelectorAll('h1 span');
+    titleLetters.forEach((letter, index) => {
+        letter.style.display = 'inline-block';
+        letter.style.animation = `spin3D 2s infinite ${index * 0.1}s`;
+    });
 
     // Ajouter des emojis flottants
     addFloatingEmojis();
+
+    // Ajouter des effets de survol sur tous les textes
+    document.querySelectorAll('p, span, h1').forEach(element => {
+        element.addEventListener('mouseover', () => {
+            element.style.animation = 'none';
+            element.offsetHeight;
+            element.style.animation = 'letterPop 0.5s ease';
+        });
+    });
 });
