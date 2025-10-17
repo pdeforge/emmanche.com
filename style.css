@@ -206,6 +206,71 @@ h1 span:nth-child(11) { animation-delay: 1.0s; }
     color: var(--secondary-color);
 }
 
+/* Effets kitsch */
+.rainbow-letter {
+    display: inline-block;
+    animation: rainbow 2s linear infinite;
+}
+
+@keyframes rainbow {
+    0% { color: red; }
+    16% { color: orange; }
+    32% { color: yellow; }
+    48% { color: green; }
+    64% { color: blue; }
+    80% { color: indigo; }
+    100% { color: violet; }
+}
+
+.bouncy-letter {
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+@keyframes letterPop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.5) rotate(10deg); }
+    100% { transform: scale(1); }
+}
+
+.wave-letter {
+    animation: wave 1.5s infinite ease-in-out;
+}
+
+@keyframes wave {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px) rotate(10deg); }
+}
+
+.spin-3d {
+    animation: spin3D 4s infinite linear;
+}
+
+@keyframes spin3D {
+    0% { transform: rotateY(0deg); }
+    100% { transform: rotateY(360deg); }
+}
+
+.floating-emoji {
+    position: fixed;
+    font-size: 2em;
+    animation: floatUp 5s linear forwards;
+    pointer-events: none;
+}
+
+@keyframes floatUp {
+    0% {
+        bottom: -20px;
+        transform: translateX(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        bottom: 100vh;
+        transform: translateX(100px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
 /* Responsive design */
 @media (max-width: 480px) {
     main {
