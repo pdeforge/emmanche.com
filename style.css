@@ -140,9 +140,78 @@ h1 span:nth-child(11) { animation-delay: 1.0s; }
     margin-top: 2rem;
 }
 
+.construction-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 1.2em;
+    margin-bottom: 1rem;
+}
+
+.construction-text .emoji {
+    font-size: 1.5em;
+    display: inline-block;
+    animation: pulse 1s infinite;
+}
+
+.construction-text .text {
+    display: inline-block;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: gradientMove 3s linear infinite;
+    font-weight: bold;
+}
+
 .small-text {
     font-size: 0.9em;
     color: #666;
+    position: relative;
+    display: inline-block;
+}
+
+.sparkle-text {
+    animation: sparkleText 2s infinite;
+    position: relative;
+}
+
+.sparkle-text::before,
+.sparkle-text::after {
+    content: "✨";
+    position: absolute;
+    animation: twinkle 1.5s infinite;
+}
+
+.sparkle-text::before {
+    left: -20px;
+    animation-delay: 0.5s;
+}
+
+.sparkle-text::after {
+    right: -20px;
+    animation-delay: 0.75s;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+}
+
+@keyframes sparkleText {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0; transform: scale(0.5); }
+    50% { opacity: 1; transform: scale(1); }
 }
 
 /* Animations */
