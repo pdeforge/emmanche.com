@@ -103,10 +103,13 @@ function addFloatingEmojis() {
 
 // Initialisation quand le DOM est chargé
 document.addEventListener('DOMContentLoaded', () => {
-    // Effet arc-en-ciel sur tous les textes de la blague
-    const jokeBox = document.querySelector('.joke-box');
-    const allJokeTexts = jokeBox.querySelectorAll('p');
-    allJokeTexts.forEach(text => makeRainbowText(text));
+    // Effet arc-en-ciel sur la question uniquement (pas la punchline)
+    const joke = document.querySelector('.joke');
+    if (joke) makeRainbowText(joke);
+
+    // Effet global sur la punchline pour garder les espaces
+    const punchline = document.querySelector('.punchline');
+    if (punchline) punchline.classList.add('move-text');
 
     // Effet de danse sur le tagline
     const tagline = document.querySelector('.tagline');
