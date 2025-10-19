@@ -115,22 +115,9 @@
   const prompt = () => `<span class='prompt'>root@ubuntu:${cwd}$</span> <span class='input'>${input}</span><span class='cursor'>&nbsp;</span>`;
 
     let connected = false;
-    let matrixInterval = null;
-    let matrixChars = [];
     function render() {
       if (!connected) {
-        // Matrix effect
-        let matrixHtml = '';
-        if (matrixChars.length > 0) {
-          matrixHtml += '<div id="matrix-effect" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1;">';
-          for (let col = 0; col < matrixChars.length; col++) {
-            for (let row = 0; row < matrixChars[col].length; row++) {
-              matrixHtml += `<span style='color:#50fa7b;opacity:${1-row/20};font-size:1.2em;position:absolute;left:${col*2.5}%;top:${row*2.5}%;'>${matrixChars[col][row]}</span>`;
-            }
-          }
-          matrixHtml += '</div>';
-        }
-        terminal.innerHTML = matrixHtml + connectionSequence.join('');
+        terminal.innerHTML = connectionSequence.join('');
         terminal.scrollTop = terminal.scrollHeight;
         inputEl.value = '';
         inputEl.style.display = 'none';
@@ -157,33 +144,9 @@
     ];
     let connectionSequence = [];
 
-    function startMatrixEffect() {
-      const cols = 40;
-      const rows = 20;
-      matrixChars = Array.from({length: cols}, () => []);
-      matrixInterval = setInterval(() => {
-        for (let col = 0; col < cols; col++) {
-          if (matrixChars[col].length < rows) {
-            // Add new char
-            const char = String.fromCharCode(0x30A0 + Math.floor(Math.random()*96));
-            matrixChars[col].unshift(char);
-          } else {
-            matrixChars[col].pop();
-          }
-        }
-        render();
-      }, 80);
-    }
-
-    function stopMatrixEffect() {
-      clearInterval(matrixInterval);
-      matrixChars = [];
-    }
-
     function runConnectionSequence() {
       let i = 0;
       connectionSequence = [];
-      startMatrixEffect();
       render();
       function nextStep() {
         if (i < connectionSteps.length) {
@@ -192,7 +155,6 @@
           i++;
           setTimeout(nextStep, 1000);
         } else {
-          stopMatrixEffect();
           connected = true;
           render();
           inputEl.focus();
