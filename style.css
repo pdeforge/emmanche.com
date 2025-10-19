@@ -1,5 +1,5 @@
 body {
-    background: #fff;
+    background: #181818;
     margin: 0;
     font-family: 'VT323', monospace;
     font-size: 22px;
@@ -11,50 +11,80 @@ body {
     align-items: center;
     height: 100vh;
 }
+
 #terminal {
-    background: #222;
-    color: #eee;
-    border-radius: 8px;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.12);
-    width: 600px;
-    max-width: 95vw;
-    min-height: 350px;
-    padding: 24px;
-    font-size: 1.1em;
+    background: #181818;
+    color: #e5ffe5;
+    border: 2px solid #00ff00;
+    border-radius: 6px;
+    box-shadow: 0 0 32px #000a;
+    width: 640px;
+    max-width: 98vw;
+    min-height: 340px;
+    padding: 18px 18px 12px 18px;
+    font-size: 1.15em;
     display: flex;
     flex-direction: column;
     font-family: 'VT323', monospace;
 }
+
 #output {
     flex: 1;
     white-space: pre-wrap;
     word-break: break-word;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
     font-family: 'VT323', monospace;
+    color: #e5ffe5;
+    letter-spacing: 0.02em;
 }
+
 #input-form {
     display: flex;
     align-items: center;
     gap: 8px;
 }
+
 .prompt {
-    color: #6af46a;
+    color: #00ff00;
     font-weight: bold;
     font-family: 'VT323', monospace;
+    font-size: 1.1em;
+    margin-right: 2px;
 }
+
 #input {
-    background: #222;
-    color: #eee;
+    background: transparent;
+    color: #e5ffe5;
     border: none;
     outline: none;
     font-family: 'VT323', monospace;
     font-size: 1em;
     width: 100%;
-    padding: 4px 0;
+    padding: 0;
+    caret-color: #00ff00;
+    letter-spacing: 0.02em;
 }
+
 #input:focus {
-    background: #222;
+    background: transparent;
     color: #fff;
+}
+
+/* Curseur clignotant (scanline) */
+#input::after {
+    content: '';
+    display: inline-block;
+    width: 10px;
+    height: 1.2em;
+    background: #00ff00;
+    margin-left: 2px;
+    animation: blink-cursor 1s steps(2, start) infinite;
+    vertical-align: middle;
+}
+
+@keyframes blink-cursor {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
 }
     background-color: #f9f9f9;
     padding: 1.5rem;
