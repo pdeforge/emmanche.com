@@ -124,108 +124,71 @@
       let out = '';
       let err = '';
       const args = cmd.trim().split(/\s+/);
-        switch(args[0]) {
-          case 'ls':
-            out = '<span class="output">Documents  Downloads  Music  Pictures  Videos</span>';
-            break;
-          case 'pwd':
-            out = `<span class=\"output\">/root</span>`;
-            break;
-          case 'whoami':
-            out = `<span class=\"output\">root</span>`;
-            break;
-          case 'echo':
-            out = `<span class=\"output\">${args.slice(1).join(' ')}</span>`;
-            break;
-          case 'clear':
-            history = [];
-            return;
-          case 'ping':
-            out = `<span class=\"output\">PING ${args[1]||'localhost'}: 56 data bytes\n64 bytes from ${args[1]||'localhost'}: icmp_seq=1 ttl=64 time=0.045 ms\n64 bytes from ${args[1]||'localhost'}: icmp_seq=2 ttl=64 time=0.042 ms\n--- ${args[1]||'localhost'} ping statistics ---\n2 packets transmitted, 2 received, 0% packet loss, time 1001ms</span>`;
-            break;
-          case 'help':
-            out = `<span class=\"output\">Supported commands: ls, pwd, whoami, echo, clear, ping, help</span>`;
-            break;
-          case 'exit':
-            out = `<span class=\"output\">Session ended.</span>`;
-            break;
-          case 'cd':
-            if(args[1]) {
-              cwd = args[1];
-              out = '';
-            } else {
-              err = '<span class="error">cd: missing argument</span>';
-            }
-            break;
-          case '':
+      switch(args[0]) {
+        case 'ls':
+          out = '<span class="output">Documents  Downloads  Music  Pictures  Videos</span>';
+          break;
+        case 'pwd':
+          out = `<span class=\"output\">/root</span>`;
+          break;
+        case 'whoami':
+          out = `<span class=\"output\">root</span>`;
+          break;
+        case 'echo':
+          out = `<span class=\"output\">${args.slice(1).join(' ')}</span>`;
+          break;
+        case 'clear':
+          history = [];
+          return;
+        case 'ping':
+          out = `<span class=\"output\">PING ${args[1]||'localhost'}: 56 data bytes\n64 bytes from ${args[1]||'localhost'}: icmp_seq=1 ttl=64 time=0.045 ms\n64 bytes from ${args[1]||'localhost'}: icmp_seq=2 ttl=64 time=0.042 ms\n--- ${args[1]||'localhost'} ping statistics ---\n2 packets transmitted, 2 received, 0% packet loss, time 1001ms</span>`;
+          break;
+        case 'help':
+          out = `<span class=\"output\">Supported commands: ls, pwd, whoami, echo, clear, ping, help</span>`;
+          break;
+        case 'exit':
+          out = `<span class=\"output\">Session ended.</span>`;
+          break;
+        case 'cd':
+          if(args[1]) {
+            cwd = args[1];
             out = '';
-            break;
-          default:
-            err = `<span class="error">Unknown command: ${cmd}</span>`;
-        }
-        // Input event for all devices
-        inputEl.addEventListener('input', function(e) {
-          input = inputEl.value;
-          render();
-        });
-
-        // Form submit = Enter
-        formEl.addEventListener('submit', function(e) {
-          handleCommand(input);
-          input = '';
-          render();
-          e.preventDefault();
-        });
-
-        // Keyboard navigation
-        inputEl.addEventListener('keydown', function(e) {
-          if(e.key === 'ArrowUp') {
-            if(historyIndex > 0) {
-              historyIndex--;
-              const lastCmd = history[historyIndex]?.match(/root@ubuntu:[^$]+\$ ([^<]+)/);
-              if(lastCmd) input = lastCmd[1];
-              inputEl.value = input;
-              render();
-            }
-            e.preventDefault();
-          } else if(e.key === 'ArrowDown') {
-            if(historyIndex < history.length - 1) {
-              historyIndex++;
-              const nextCmd = history[historyIndex]?.match(/root@ubuntu:[^$]+\$ ([^<]+)/);
-              if(nextCmd) input = nextCmd[1];
-              else input = '';
-              inputEl.value = input;
-              render();
-            } else {
-              input = '';
-              inputEl.value = '';
-              render();
-            }
-            e.preventDefault();
+          } else {
+            err = '<span class="error">cd: missing argument</span>';
           }
-        });
+          break;
+        case '':
+          out = '';
+          break;
+        default:
+          err = `<span class="error">Unknown command: ${cmd}</span>`;
+      }
+      if(out) history.push(prompt().replace('<span class=\'cursor\'>&nbsp;</span>', '') + '\n' + out + '\n');
+      if(err) history.push(prompt().replace('<span class=\'cursor\'>&nbsp;</span>', '') + '\n' + err + '\n');
+    }
 
-    hiddenInput.addEventListener('keydown', function(e) {
-      if(e.key === 'Enter') {
-        handleCommand(input);
-        input = '';
-        hiddenInput.value = '';
-        lastInputValue = '';
-        historyIndex = history.length;
-        render();
-        e.preventDefault();
-      } else if(e.key === 'Backspace') {
-        input = input.slice(0, -1);
-        hiddenInput.value = input;
-        lastInputValue = input;
-        render();
-        e.preventDefault();
-      } else if(e.key === 'ArrowUp') {
+    // Input event for all devices
+    inputEl.addEventListener('input', function(e) {
+      input = inputEl.value;
+      render();
+    });
+
+    // Form submit = Enter
+    formEl.addEventListener('submit', function(e) {
+      handleCommand(input);
+      input = '';
+      render();
+      e.preventDefault();
+    });
+
+    // Keyboard navigation
+    inputEl.addEventListener('keydown', function(e) {
+      if(e.key === 'ArrowUp') {
         if(historyIndex > 0) {
           historyIndex--;
           const lastCmd = history[historyIndex]?.match(/root@ubuntu:[^$]+\$ ([^<]+)/);
           if(lastCmd) input = lastCmd[1];
-          hiddenInput.value = input;
+          inputEl.value = input;
           render();
         }
         e.preventDefault();
@@ -235,11 +198,11 @@
           const nextCmd = history[historyIndex]?.match(/root@ubuntu:[^$]+\$ ([^<]+)/);
           if(nextCmd) input = nextCmd[1];
           else input = '';
-          hiddenInput.value = input;
+          inputEl.value = input;
           render();
         } else {
           input = '';
-          hiddenInput.value = '';
+          inputEl.value = '';
           render();
         }
         e.preventDefault();
