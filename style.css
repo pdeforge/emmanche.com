@@ -15,6 +15,7 @@ body {
         background: #fff;
         margin: 0;
         font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
+        font-size: 16px;
     }
     #terminal-container {
         display: flex;
