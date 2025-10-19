@@ -114,11 +114,53 @@
 
   const prompt = () => `<span class='prompt'>root@ubuntu:${cwd}$</span> <span class='input'>${input}</span><span class='cursor'>&nbsp;</span>`;
 
+    let connected = false;
     function render() {
-      terminal.innerHTML = history.join('') + prompt();
-      terminal.scrollTop = terminal.scrollHeight;
-      // Place le curseur au bon endroit
-      inputEl.value = input;
+      if (!connected) {
+        terminal.innerHTML = connectionSequence.join('');
+        terminal.scrollTop = terminal.scrollHeight;
+        inputEl.value = '';
+        inputEl.style.display = 'none';
+      } else {
+        terminal.innerHTML = history.join('') + prompt();
+        terminal.scrollTop = terminal.scrollHeight;
+        inputEl.value = input;
+        inputEl.style.display = 'block';
+      }
+    }
+
+    // Satellite connection sequence
+    const connectionSteps = [
+      'Initializing satellite uplink...\n',
+      'Establishing secure channel...\n',
+      'Authenticating remote node...\n',
+      'Synchronizing orbital parameters...\n',
+      'Locking signal...\n',
+      'Calibrating transmission...\n',
+      'Handshake with ground station...\n',
+      'Verifying encryption...\n',
+      'Connection stable.\n',
+      'Satellite link established.\n',
+    ];
+    let connectionSequence = [];
+
+    function runConnectionSequence() {
+      let i = 0;
+      connectionSequence = [];
+      render();
+      function nextStep() {
+        if (i < connectionSteps.length) {
+          connectionSequence.push(`<span class='output'>${connectionSteps[i]}</span>`);
+          render();
+          i++;
+          setTimeout(nextStep, 1000);
+        } else {
+          connected = true;
+          render();
+          inputEl.focus();
+        }
+      }
+      nextStep();
     }
 
     function handleCommand(cmd) {
@@ -211,9 +253,10 @@
     });
 
     // Focus input on load and click
-    window.addEventListener('load', () => inputEl.focus());
+    window.addEventListener('load', () => {
+      runConnectionSequence();
+    });
     terminal.addEventListener('click', () => inputEl.focus());
-    render();
   </script>
 </body>
 </html>
