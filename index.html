@@ -179,8 +179,19 @@
     terminal.addEventListener('click', focusInput);
     terminal.addEventListener('focus', focusInput);
 
+    // Fix for mobile input: only append new character if needed
+    let lastInputValue = '';
     hiddenInput.addEventListener('input', function(e) {
-      input = hiddenInput.value;
+      // Detect if input is longer (character added)
+      if (hiddenInput.value.length > lastInputValue.length) {
+        input += hiddenInput.value.slice(lastInputValue.length);
+      } else if (hiddenInput.value.length < lastInputValue.length) {
+        // Character removed
+        input = input.slice(0, hiddenInput.value.length);
+      } else {
+        input = hiddenInput.value;
+      }
+      lastInputValue = hiddenInput.value;
       render();
     });
 
@@ -189,12 +200,14 @@
         handleCommand(input);
         input = '';
         hiddenInput.value = '';
+        lastInputValue = '';
         historyIndex = history.length;
         render();
         e.preventDefault();
       } else if(e.key === 'Backspace') {
         input = input.slice(0, -1);
         hiddenInput.value = input;
+        lastInputValue = input;
         render();
         e.preventDefault();
       } else if(e.key === 'ArrowUp') {
