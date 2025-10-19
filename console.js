@@ -7,7 +7,7 @@ const fs = { // virtual file system
 };
 let currentPath = '/home/user';
 let files = {
-    '/home/user/hello.txt': 'Hello world!\nBienvenue sur la console Linux.',
+    '/home/user/hello.txt': 'Hello world!',
 };
 function resolvePath(path) {
     if (!path) return currentPath;
