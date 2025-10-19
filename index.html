@@ -22,7 +22,11 @@
       border-radius: 8px;
       padding: 0;
       width: 700px;
+      height: 400px;
+      min-width: 700px;
       min-height: 400px;
+      max-width: 700px;
+      max-height: 400px;
       display: flex;
       flex-direction: column;
       font-family: 'VT323', monospace;
@@ -32,7 +36,9 @@
       color: #eee;
       padding: 24px 24px 12px 24px;
       font-size: 1.5em;
+      height: 350px;
       min-height: 350px;
+      max-height: 350px;
       outline: none;
       white-space: pre-wrap;
       overflow-y: auto;
@@ -104,33 +110,33 @@
           out = `<span class=\"output\">root</span>`;
           break;
         case 'echo':
-          out = `<span class="output">${args.slice(1).join(' ')}</span>`;
+          out = `<span class=\"output\">${args.slice(1).join(' ')}</span>`;
           break;
         case 'clear':
           history = [];
           return;
         case 'ping':
-          out = `<span class="output">PING ${args[1]||'localhost'}: 56 data bytes\n64 bytes from ${args[1]||'localhost'}: icmp_seq=1 ttl=64 time=0.045 ms\n64 bytes from ${args[1]||'localhost'}: icmp_seq=2 ttl=64 time=0.042 ms\n--- ${args[1]||'localhost'} ping statistics ---\n2 packets transmitted, 2 received, 0% packet loss, time 1001ms</span>`;
+          out = `<span class=\"output\">PING ${args[1]||'localhost'}: 56 data bytes\n64 bytes from ${args[1]||'localhost'}: icmp_seq=1 ttl=64 time=0.045 ms\n64 bytes from ${args[1]||'localhost'}: icmp_seq=2 ttl=64 time=0.042 ms\n--- ${args[1]||'localhost'} ping statistics ---\n2 packets transmitted, 2 received, 0% packet loss, time 1001ms</span>`;
           break;
         case 'help':
-          out = `<span class="output">Commandes supportées: ls, pwd, whoami, echo, clear, ping, help</span>`;
+          out = `<span class=\"output\">Supported commands: ls, pwd, whoami, echo, clear, ping, help</span>`;
           break;
         case 'exit':
-          out = `<span class="output">Session terminée.</span>`;
+          out = `<span class=\"output\">Session ended.</span>`;
           break;
         case 'cd':
           if(args[1]) {
             cwd = args[1];
             out = '';
           } else {
-            err = '<span class="error">cd: argument manquant</span>';
+            err = '<span class="error">cd: missing argument</span>';
           }
           break;
         case '':
           out = '';
           break;
         default:
-          err = `<span class="error">Commande inconnue: ${cmd}</span>`;
+          err = `<span class="error">Unknown command: ${cmd}</span>`;
       }
       if(out) history.push(prompt().replace('<span class=\'cursor\'>&nbsp;</span>', '') + '\n' + out + '\n');
       if(err) history.push(prompt().replace('<span class=\'cursor\'>&nbsp;</span>', '') + '\n' + err + '\n');
