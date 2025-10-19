@@ -66,11 +66,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('input-form');
     const input = document.getElementById('input');
     const output = document.getElementById('output');
-    output.innerHTML = 'Bienvenue sur la console Linux ! Tapez help pour la liste des commandes.\n';
+    output.innerHTML = '';
     form.addEventListener('submit', e => {
         e.preventDefault();
         const val = input.value;
-        output.innerHTML += `<span class="prompt">$</span> ${val}\n`;
+        output.innerHTML += `<span class=\"prompt\">$</span> ${val}\n`;
         let result = handleCommand(val);
         if (result) output.innerHTML += result + '\n';
         input.value = '';

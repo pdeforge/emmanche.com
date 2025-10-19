@@ -14,8 +14,8 @@ body {
     body {
         background: #fff;
         margin: 0;
-        font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
-        font-size: 16px;
+        font-family: 'VT323', monospace;
+        font-size: 22px;
     }
     #terminal-container {
         display: flex;
