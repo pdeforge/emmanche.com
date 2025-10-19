@@ -1,0 +1,234 @@
+body {
+    background: #181818;
+    margin: 0;
+    font-family: 'VT323', monospace;
+    font-size: 22px;
+}
+
+#terminal-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#terminal {
+    background: #181818;
+    color: #e5ffe5;
+    border: 2px solid #00ff00;
+    border-radius: 6px;
+    box-shadow: 0 0 32px #000a;
+    width: 640px;
+    max-width: 98vw;
+    min-height: 340px;
+    padding: 18px 18px 12px 18px;
+    font-size: 1.15em;
+    display: flex;
+    flex-direction: column;
+    font-family: 'VT323', monospace;
+}
+
+#output {
+    flex: 1;
+    white-space: pre-wrap;
+    word-break: break-word;
+    margin-bottom: 10px;
+    font-family: 'VT323', monospace;
+    color: #e5ffe5;
+    letter-spacing: 0.02em;
+}
+
+#input-form {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.prompt {
+    color: #00ff00;
+    font-weight: bold;
+    font-family: 'VT323', monospace;
+    font-size: 1.1em;
+    margin-right: 2px;
+}
+
+#input {
+    background: transparent;
+    color: #e5ffe5;
+    border: none;
+    outline: none;
+    font-family: 'VT323', monospace;
+    font-size: 1em;
+    width: 100%;
+    padding: 0;
+    caret-color: #00ff00;
+    letter-spacing: 0.02em;
+}
+
+#input:focus {
+    background: transparent;
+    color: #fff;
+}
+    100% { transform: translateY(0) scale(1); letter-spacing: normal; }
+}
+
+.sparkle-text {
+    animation: sparkleText 2s infinite;
+    position: relative;
+}
+
+.sparkle-text::before,
+.sparkle-text::after {
+    content: "✨";
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0; transform: scale(0.5); }
+    50% { opacity: 1; transform: scale(1); }
+}
+
+/* Animations */
+.bounce {
+    animation: bounce 1s cubic-bezier(0.36, 0, 0.66, -0.56) infinite;
+    animation-direction: alternate;
+    display: inline-block;
+}
+
+@keyframes bounce {
+    0% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(5deg); }
+    100% { transform: translateY(0) rotate(-5deg); }
+}
+
+.blink {
+    animation: blink 1s ease-in-out infinite;
+    display: inline-block;
+    transform-origin: center;
+}
+
+@keyframes blink {
+    0%, 100% { 
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% { 
+        opacity: 0.3;
+        transform: scale(1.1);
+    }
+}
+
+/* Hover effects */
+.joke-box {
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    cursor: pointer;
+    position: relative;
+}
+
+.joke-box:hover {
+    transform: scale(1.05) rotate(2deg);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+}
+
+.joke-box:active {
+    transform: scale(0.95);
+}
+
+/* Animation pour le texte de la blague */
+.joke, .punchline {
+    transition: transform 0.3s ease;
+}
+
+.joke-box:hover .joke {
+    transform: translateY(-5px);
+    color: var(--primary-color);
+}
+
+.joke-box:hover .punchline {
+    transform: translateY(5px);
+    color: var(--secondary-color);
+}
+
+/* Effets kitsch */
+.rainbow-letter {
+    display: inline-block;
+    animation: rainbow 2s linear infinite;
+}
+.rainbow-letter.space {
+    width: 0.6em;
+    display: inline-block;
+    background: none;
+    animation: none;
+}
+
+@keyframes rainbow {
+    0% { color: red; }
+    16% { color: orange; }
+    32% { color: yellow; }
+    48% { color: green; }
+    64% { color: blue; }
+    80% { color: indigo; }
+    100% { color: violet; }
+}
+
+.bouncy-letter {
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+@keyframes letterPop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.5) rotate(10deg); }
+    100% { transform: scale(1); }
+}
+
+.wave-letter {
+    animation: wave 1.5s infinite ease-in-out;
+}
+
+@keyframes wave {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px) rotate(10deg); }
+}
+
+.spin-3d {
+    animation: spin3D 4s infinite linear;
+}
+
+@keyframes spin3D {
+    0% { transform: rotateY(0deg); }
+    100% { transform: rotateY(360deg); }
+}
+
+.floating-emoji {
+    position: fixed;
+    font-size: 2em;
+    animation: floatUp 5s linear forwards;
+    pointer-events: none;
+}
+
+@keyframes floatUp {
+    0% {
+        bottom: -20px;
+        transform: translateX(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        bottom: 100vh;
+        transform: translateX(100px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Responsive design */
+@media (max-width: 480px) {
+    main {
+        padding: 1.5rem;
+    }
+    
+    h1 {
+        font-size: 2.5em;
+    }
+    
+    .tagline {
+        font-size: 1.2em;
+    }
+}
