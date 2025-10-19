@@ -7,26 +7,9 @@ body {
 
 #terminal-container {
     display: flex;
-    }
-
-    .small-text {
-        font-size: 0.9em;
-        color: #666;
-        position: relative;
-        display: inline-block;
-        /* Animation globale pour garder les espaces */
-    color: #e5ffe5;
-    border: 2px solid #00ff00;
-    border-radius: 6px;
-    box-shadow: 0 0 32px #000a;
-    width: 640px;
-    max-width: 98vw;
-    min-height: 340px;
-    padding: 18px 18px 12px 18px;
-    font-size: 1.15em;
-    display: flex;
-    flex-direction: column;
-    font-family: 'VT323', monospace;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
 #output {
@@ -69,11 +52,6 @@ body {
 #input:focus {
     background: transparent;
     color: #fff;
-}
-
-    animation: gradientMove 3s linear infinite;
-    font-weight: bold;
-}
 
 
 .small-text {
@@ -102,34 +80,6 @@ body {
 .sparkle-text::before,
 .sparkle-text::after {
     content: "✨";
-    position: absolute;
-    animation: twinkle 1.5s infinite;
-}
-
-.sparkle-text::before {
-    left: -20px;
-    animation-delay: 0.5s;
-}
-
-.sparkle-text::after {
-    right: -20px;
-    animation-delay: 0.75s;
-}
-
-@keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.2); }
-}
-
-@keyframes gradientMove {
-    0% { background-position: 0% 50%; }
-    100% { background-position: 200% 50%; }
-}
-
-@keyframes sparkleText {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-5px); }
-}
 
 @keyframes twinkle {
     0%, 100% { opacity: 0; transform: scale(0.5); }
