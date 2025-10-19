@@ -7,13 +7,14 @@ body {
 
 #terminal-container {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
+    }
 
-#terminal {
-    background: #181818;
+    .small-text {
+        font-size: 0.9em;
+        color: #666;
+        position: relative;
+        display: inline-block;
+        /* Animation globale pour garder les espaces */
     color: #e5ffe5;
     border: 2px solid #00ff00;
     border-radius: 6px;
@@ -70,66 +71,6 @@ body {
     color: #fff;
 }
 
-/* Curseur clignotant (scanline) */
-#input::after {
-    content: '';
-    display: inline-block;
-    width: 10px;
-    height: 1.2em;
-    background: #00ff00;
-    margin-left: 2px;
-    animation: blink-cursor 1s steps(2, start) infinite;
-    vertical-align: middle;
-}
-
-@keyframes blink-cursor {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
-}
-    background-color: #f9f9f9;
-    padding: 1.5rem;
-    border-radius: 15px;
-    margin: 2rem 0;
-    border: 3px dashed var(--accent-color);
-}
-
-.joke {
-    font-size: 1.2em;
-    color: #333;
-    margin-bottom: 1rem;
-}
-
-.punchline {
-    color: var(--primary-color);
-    font-size: 1.1em;
-    font-weight: bold;
-}
-
-.construction {
-    margin-top: 2rem;
-}
-
-.construction-text {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    font-size: 1.2em;
-    margin-bottom: 1rem;
-}
-
-.construction-text .emoji {
-    font-size: 1.5em;
-    display: inline-block;
-    animation: pulse 1s infinite;
-}
-
-.construction-text .text {
-    display: inline-block;
-    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
     animation: gradientMove 3s linear infinite;
     font-weight: bold;
 }
