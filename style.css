@@ -1,85 +1,61 @@
-:root {
-    --primary-color: #FF6B6B;
-    --secondary-color: #4ECDC4;
-    --accent-color: #FFE66D;
-    --gradient-speed: 10s;
-}
-
 body {
-    font-family: 'Comic Neue', cursive;
-    line-height: 1.6;
+    background: #fff;
     margin: 0;
-    padding: 0;
-    min-height: 100vh;
-    body {
-        background: #fff;
-        margin: 0;
-        font-family: 'VT323', monospace;
-        font-size: 22px;
-    }
-    #terminal-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-    }
-    #terminal {
-        background: #222;
-        color: #eee;
-        border-radius: 8px;
-        box-shadow: 0 4px 24px rgba(0,0,0,0.12);
-        width: 600px;
-        max-width: 95vw;
-        min-height: 350px;
-        padding: 24px;
-        font-size: 1.1em;
-        display: flex;
-        flex-direction: column;
-    }
-    #output {
-        flex: 1;
-        white-space: pre-wrap;
-        word-break: break-word;
-        margin-bottom: 12px;
-    }
-    #input-form {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-    .prompt {
-        color: #6af46a;
-        font-weight: bold;
-        font-family: inherit;
-    }
-    #input {
-        background: #222;
-        color: #eee;
-        border: none;
-        outline: none;
-        font-family: inherit;
-        font-size: 1em;
-        width: 100%;
-        padding: 4px 0;
-    }
-    #input:focus {
-        background: #222;
-        color: #fff;
-    }
-@keyframes shimmer {
-    0% {
-        text-shadow: 0 0 10px rgba(78, 205, 196, 0);
-    }
-    50% {
-        text-shadow: 0 0 20px rgba(78, 205, 196, 0.5);
-        color: var(--primary-color);
-    }
-    100% {
-        text-shadow: 0 0 10px rgba(78, 205, 196, 0);
-    }
+    font-family: 'VT323', monospace;
+    font-size: 22px;
 }
 
-.joke-box {
+#terminal-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+#terminal {
+    background: #222;
+    color: #eee;
+    border-radius: 8px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+    width: 600px;
+    max-width: 95vw;
+    min-height: 350px;
+    padding: 24px;
+    font-size: 1.1em;
+    display: flex;
+    flex-direction: column;
+    font-family: 'VT323', monospace;
+}
+#output {
+    flex: 1;
+    white-space: pre-wrap;
+    word-break: break-word;
+    margin-bottom: 12px;
+    font-family: 'VT323', monospace;
+}
+#input-form {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.prompt {
+    color: #6af46a;
+    font-weight: bold;
+    font-family: 'VT323', monospace;
+}
+#input {
+    background: #222;
+    color: #eee;
+    border: none;
+    outline: none;
+    font-family: 'VT323', monospace;
+    font-size: 1em;
+    width: 100%;
+    padding: 4px 0;
+}
+#input:focus {
+    background: #222;
+    color: #fff;
+}
     background-color: #f9f9f9;
     padding: 1.5rem;
     border-radius: 15px;
