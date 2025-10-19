@@ -23,13 +23,30 @@
       padding: 0;
       width: 700px;
       height: 400px;
-      min-width: 700px;
-      min-height: 400px;
-      max-width: 700px;
-      max-height: 400px;
+      min-width: 320px;
+      min-height: 200px;
+      max-width: 98vw;
+      max-height: 80vh;
       display: flex;
       flex-direction: column;
       font-family: 'VT323', monospace;
+    }
+    @media (max-width: 800px) {
+      .terminal-container {
+        width: 98vw;
+        height: 60vh;
+        min-width: 0;
+        min-height: 0;
+        max-width: 98vw;
+        max-height: 80vh;
+      }
+      .terminal {
+        font-size: 1.1em;
+        padding: 8px 4px 8px 4px;
+        height: 50vh;
+        min-height: 0;
+        max-height: 60vh;
+      }
     }
     .terminal {
       background: #111;
@@ -40,9 +57,10 @@
       min-height: 350px;
       max-height: 350px;
       outline: none;
-      white-space: pre-wrap;
+      white-space: pre;
       overflow-y: auto;
       border-radius: 8px;
+      word-break: break-all;
     }
     .prompt {
       color: #50fa7b;
@@ -142,15 +160,41 @@
       if(err) history.push(prompt().replace('<span class=\'cursor\'>&nbsp;</span>', '') + '\n' + err + '\n');
     }
 
-    terminal.addEventListener('keydown', function(e) {
+    // Mobile input workaround
+    let hiddenInput = document.createElement('input');
+    hiddenInput.type = 'text';
+    hiddenInput.style.position = 'absolute';
+    hiddenInput.style.opacity = '0';
+    hiddenInput.style.height = '0';
+    hiddenInput.style.width = '0';
+    hiddenInput.autocapitalize = 'off';
+    hiddenInput.autocomplete = 'off';
+    hiddenInput.spellcheck = false;
+    document.body.appendChild(hiddenInput);
+
+    function focusInput() {
+      hiddenInput.focus();
+    }
+
+    terminal.addEventListener('click', focusInput);
+    terminal.addEventListener('focus', focusInput);
+
+    hiddenInput.addEventListener('input', function(e) {
+      input = hiddenInput.value;
+      render();
+    });
+
+    hiddenInput.addEventListener('keydown', function(e) {
       if(e.key === 'Enter') {
         handleCommand(input);
         input = '';
+        hiddenInput.value = '';
         historyIndex = history.length;
         render();
         e.preventDefault();
       } else if(e.key === 'Backspace') {
         input = input.slice(0, -1);
+        hiddenInput.value = input;
         render();
         e.preventDefault();
       } else if(e.key === 'ArrowUp') {
@@ -158,6 +202,7 @@
           historyIndex--;
           const lastCmd = history[historyIndex]?.match(/root@ubuntu:[^$]+\$ ([^<]+)/);
           if(lastCmd) input = lastCmd[1];
+          hiddenInput.value = input;
           render();
         }
         e.preventDefault();
@@ -167,23 +212,67 @@
           const nextCmd = history[historyIndex]?.match(/root@ubuntu:[^$]+\$ ([^<]+)/);
           if(nextCmd) input = nextCmd[1];
           else input = '';
+          hiddenInput.value = input;
           render();
         } else {
           input = '';
+          hiddenInput.value = '';
+          render();
+        }
+        e.preventDefault();
+      }
+    });
+
+    // Desktop keyboard support
+    terminal.addEventListener('keydown', function(e) {
+      if(document.activeElement !== terminal) return;
+      if(e.key === 'Enter') {
+        handleCommand(input);
+        input = '';
+        hiddenInput.value = '';
+        historyIndex = history.length;
+        render();
+        e.preventDefault();
+      } else if(e.key === 'Backspace') {
+        input = input.slice(0, -1);
+        hiddenInput.value = input;
+        render();
+        e.preventDefault();
+      } else if(e.key === 'ArrowUp') {
+        if(historyIndex > 0) {
+          historyIndex--;
+          const lastCmd = history[historyIndex]?.match(/root@ubuntu:[^$]+\$ ([^<]+)/);
+          if(lastCmd) input = lastCmd[1];
+          hiddenInput.value = input;
+          render();
+        }
+        e.preventDefault();
+      } else if(e.key === 'ArrowDown') {
+        if(historyIndex < history.length - 1) {
+          historyIndex++;
+          const nextCmd = history[historyIndex]?.match(/root@ubuntu:[^$]+\$ ([^<]+)/);
+          if(nextCmd) input = nextCmd[1];
+          else input = '';
+          hiddenInput.value = input;
+          render();
+        } else {
+          input = '';
+          hiddenInput.value = '';
           render();
         }
         e.preventDefault();
       } else if(e.key.length === 1 && !e.ctrlKey && !e.metaKey) {
         input += e.key;
+        hiddenInput.value = input;
         render();
         e.preventDefault();
       }
     });
 
-    terminal.addEventListener('focus', render);
-    terminal.setAttribute('contenteditable', 'true');
-    terminal.focus();
-    render();
+  terminal.setAttribute('tabindex', '0');
+  terminal.setAttribute('contenteditable', 'false');
+  focusInput();
+  render();
   </script>
 </body>
 </html>
