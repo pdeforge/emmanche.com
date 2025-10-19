@@ -3,44 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Emmanche.com</title>
+    <title>Emmanche.com - Console Linux</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&display=swap" rel="stylesheet">
-    <script src="script.js" defer></script>
+    <script src="console.js" defer></script>
 </head>
-<body>
-    <div class="container">
-        <main>
-            <h1>
-                <span>E</span>
-                <span>m</span>
-                <span>m</span>
-                <span>a</span>
-                <span>n</span>
-                <span>c</span>
-                <span>h</span>
-                <span>e</span>
-                <span>.</span>
-                <span>c</span>
-                <span>o</span>
-                <span>m</span>
-            </h1>
-            <p class="tagline">Le site qui vous emmanche... de rire ! 🎯</p>
-            <div class="joke-box">
-                <p class="joke">P o u r q u o i   l e   s i t e   s ' a p p e l l e   E m m a n c h e . c o m   ? </p>
-                <p class="punchline">Parce que les autres noms de domaine étaient déjà pris... et celui-là nous a bien emmanché ! 😅</p>
-            </div>
-            <div class="construction">
-                <div class="construction-text">
-                    <span class="emoji">🚧</span>
-                    <span class="text">Site en construction... mais avec style !</span>
-                    <span class="emoji">🚧</span>
-                </div>
-                <p class="small-text sparkle-text">Revenez bientôt pour plus de contenu qui décoiffe !</p>
-            </div>
-        </main>
+<body style="background: #fff; margin:0;">
+    <div id="terminal-container">
+        <div id="terminal">
+            <div id="output"></div>
+            <form id="input-form" autocomplete="off">
+                <span class="prompt">$</span>
+                <input id="input" type="text" autofocus autocomplete="off" spellcheck="false" />
+            </form>
+        </div>
     </div>
 </body>
 </html>
