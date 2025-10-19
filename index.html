@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terminal Unix Émulateur</title>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: #000;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+    .terminal-container {
+      margin-top: 40px;
+      background: #111;
+      border: 2px solid #333;
+      box-shadow: 0 0 24px #222;
+      border-radius: 8px;
+      padding: 0;
+      width: 700px;
+      min-height: 400px;
+      display: flex;
+      flex-direction: column;
+      font-family: 'VT323', monospace;
+    }
+    .terminal {
+      background: #111;
+      color: #eee;
+      padding: 24px 24px 12px 24px;
+      font-size: 1.5em;
+      min-height: 350px;
+      outline: none;
+      white-space: pre-wrap;
+      overflow-y: auto;
+      border-radius: 8px;
+    }
+    .prompt {
+      color: #50fa7b;
+      display: inline;
+    }
+    .input {
+      color: #fff;
+      display: inline;
+    }
+    .output {
+      color: #f8f8f2;
+      margin-left: 0.5em;
+      display: block;
+    }
+    .error {
+      color: #ff5555;
+      margin-left: 0.5em;
+      display: block;
+    }
+    .cursor {
+      display: inline-block;
+      width: 1ch;
+      background: #fff;
+      color: #111;
+      animation: blink 1s steps(1) infinite;
+      vertical-align: top;
+    }
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="terminal-container">
+    <div class="terminal" id="terminal" tabindex="0"></div>
+  </div>
+  <script>
+    const terminal = document.getElementById('terminal');
+    let history = [];
+    let historyIndex = 0;
+    let input = '';
+    let cwd = '~';
+    let cursorVisible = true;
+
+    const prompt = () => `<span class='prompt'>paul@ubuntu:${cwd}$</span> <span class='input'>${input}</span><span class='cursor'>&nbsp;</span>`;
+
+    function render() {
+      terminal.innerHTML = history.join('') + prompt();
+      terminal.scrollTop = terminal.scrollHeight;
+    }
+
+    function handleCommand(cmd) {
+      let out = '';
+      let err = '';
+      const args = cmd.trim().split(/\s+/);
+      switch(args[0]) {
+        case 'ls':
+          out = '<span class="output">Documents  Downloads  Music  Pictures  Videos</span>';
+          break;
+        case 'pwd':
+          out = `<span class="output">/home/paul</span>`;
+          break;
+        case 'whoami':
+          out = `<span class="output">paul</span>`;
+          break;
+        case 'echo':
+          out = `<span class="output">${args.slice(1).join(' ')}</span>`;
+          break;
+        case 'clear':
+          history = [];
+          return;
+        case 'ping':
+          out = `<span class="output">PING ${args[1]||'localhost'}: 56 data bytes\n64 bytes from ${args[1]||'localhost'}: icmp_seq=1 ttl=64 time=0.045 ms\n64 bytes from ${args[1]||'localhost'}: icmp_seq=2 ttl=64 time=0.042 ms\n--- ${args[1]||'localhost'} ping statistics ---\n2 packets transmitted, 2 received, 0% packet loss, time 1001ms</span>`;
+          break;
+        case 'help':
+          out = `<span class="output">Commandes supportées: ls, pwd, whoami, echo, clear, ping, help</span>`;
+          break;
+        case 'exit':
+          out = `<span class="output">Session terminée.</span>`;
+          break;
+        case 'cd':
+          if(args[1]) {
+            cwd = args[1];
+            out = '';
+          } else {
+            err = '<span class="error">cd: argument manquant</span>';
+          }
+          break;
+        case '':
+          out = '';
+          break;
+        default:
+          err = `<span class="error">Commande inconnue: ${cmd}</span>`;
+      }
+      if(out) history.push(prompt().replace('<span class=\'cursor\'>&nbsp;</span>', '') + '\n' + out + '\n');
+      if(err) history.push(prompt().replace('<span class=\'cursor\'>&nbsp;</span>', '') + '\n' + err + '\n');
+    }
+
+    terminal.addEventListener('keydown', function(e) {
+      if(e.key === 'Enter') {
+        handleCommand(input);
+        input = '';
+        historyIndex = history.length;
+        render();
+        e.preventDefault();
+      } else if(e.key === 'Backspace') {
+        input = input.slice(0, -1);
+        render();
+        e.preventDefault();
+      } else if(e.key === 'ArrowUp') {
+        if(historyIndex > 0) {
+          historyIndex--;
+          const lastCmd = history[historyIndex]?.match(/paul@ubuntu:[^$]+\$ ([^<]+)/);
+          if(lastCmd) input = lastCmd[1];
+          render();
+        }
+        e.preventDefault();
+      } else if(e.key === 'ArrowDown') {
+        if(historyIndex < history.length - 1) {
+          historyIndex++;
+          const nextCmd = history[historyIndex]?.match(/paul@ubuntu:[^$]+\$ ([^<]+)/);
+          if(nextCmd) input = nextCmd[1];
+          else input = '';
+          render();
+        } else {
+          input = '';
+          render();
+        }
+        e.preventDefault();
+      } else if(e.key.length === 1 && !e.ctrlKey && !e.metaKey) {
+        input += e.key;
+        render();
+        e.preventDefault();
+      }
+    });
+
+    terminal.addEventListener('focus', render);
+    terminal.setAttribute('contenteditable', 'true');
+    terminal.focus();
+    render();
+  </script>
+</body>
+</html>
