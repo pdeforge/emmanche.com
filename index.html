@@ -82,7 +82,7 @@
     let cwd = '~';
     let cursorVisible = true;
 
-    const prompt = () => `<span class='prompt'>paul@ubuntu:${cwd}$</span> <span class='input'>${input}</span><span class='cursor'>&nbsp;</span>`;
+  const prompt = () => `<span class='prompt'>root@ubuntu:${cwd}$</span> <span class='input'>${input}</span><span class='cursor'>&nbsp;</span>`;
 
     function render() {
       terminal.innerHTML = history.join('') + prompt();
@@ -98,10 +98,10 @@
           out = '<span class="output">Documents  Downloads  Music  Pictures  Videos</span>';
           break;
         case 'pwd':
-          out = `<span class="output">/home/paul</span>`;
+          out = `<span class=\"output\">/root</span>`;
           break;
         case 'whoami':
-          out = `<span class="output">paul</span>`;
+          out = `<span class=\"output\">root</span>`;
           break;
         case 'echo':
           out = `<span class="output">${args.slice(1).join(' ')}</span>`;
@@ -150,7 +150,7 @@
       } else if(e.key === 'ArrowUp') {
         if(historyIndex > 0) {
           historyIndex--;
-          const lastCmd = history[historyIndex]?.match(/paul@ubuntu:[^$]+\$ ([^<]+)/);
+          const lastCmd = history[historyIndex]?.match(/root@ubuntu:[^$]+\$ ([^<]+)/);
           if(lastCmd) input = lastCmd[1];
           render();
         }
@@ -158,7 +158,7 @@
       } else if(e.key === 'ArrowDown') {
         if(historyIndex < history.length - 1) {
           historyIndex++;
-          const nextCmd = history[historyIndex]?.match(/paul@ubuntu:[^$]+\$ ([^<]+)/);
+          const nextCmd = history[historyIndex]?.match(/root@ubuntu:[^$]+\$ ([^<]+)/);
           if(nextCmd) input = nextCmd[1];
           else input = '';
           render();
